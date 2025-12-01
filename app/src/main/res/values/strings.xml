@@ -1,18 +1,26 @@
 <resources>
-    <string name="app_name">NutriProntuário</string>
+    <string name="app_name">NutriProntuario</string>
 
     <!-- Splash and Unlock -->
-    <string name="app_title">NutriProntuário</string>
+    <string name="app_title">NutriProntuario</string>
     <string name="unlock_message">Autentique-se para continuar</string>
-    <string name="use_biometric">Usar biometria</string>
+    <string name="use_biometric">Entrar com e-mail</string>
     <string name="unlock">Desbloquear</string>
+    <string name="login">Login</string>
+    <string name="auth_subtitle">Entre com seu e-mail e senha para acessar o prontuario.</string>
+    <string name="auth_email">E-mail</string>
+    <string name="auth_password">Senha</string>
+    <string name="auth_sign_in">Entrar</string>
+    <string name="auth_sign_up">Criar conta</string>
+    <string name="auth_required_fields">Preencha e-mail e senha.</string>
+    <string name="auth_invalid_credentials">Credenciais invalidas. Verifique e tente novamente.</string>
 
     <!-- Patient List -->
     <string name="patients_list">Pacientes</string>
     <string name="search_patient">Buscar paciente</string>
     <string name="add_patient">Adicionar paciente</string>
     <string name="no_patients">Nenhum paciente cadastrado</string>
-    <string name="last_appointment">Último atendimento: %1$s</string>
+    <string name="last_appointment">Ultimo atendimento: %1$s</string>
     <string name="never">Nunca</string>
 
     <!-- Patient Form -->
@@ -20,10 +28,10 @@
     <string name="edit_patient">Editar Paciente</string>
     <string name="patient_name">Nome *</string>
     <string name="patient_phone">Telefone</string>
-    <string name="patient_notes">Observações</string>
+    <string name="patient_notes">Observacoes</string>
     <string name="save">Salvar</string>
     <string name="cancel">Cancelar</string>
-    <string name="name_required">Nome é obrigatório</string>
+    <string name="name_required">Nome e obrigatorio</string>
     <string name="delete_patient">Excluir Paciente</string>
     <string name="confirm_delete">Tem certeza que deseja excluir este paciente?</string>
     <string name="delete">Excluir</string>
@@ -36,21 +44,21 @@
     <string name="tab_plans">Planos</string>
 
     <!-- Summary Tab -->
-    <string name="patient_info">Informações do Paciente</string>
+    <string name="patient_info">Informacoes do Paciente</string>
     <string name="phone">Telefone:</string>
-    <string name="notes">Observações:</string>
-    <string name="no_notes">Sem observações</string>
+    <string name="notes">Observacoes:</string>
+    <string name="no_notes">Sem observacoes</string>
     <string name="recent_data">Dados Recentes</string>
-    <string name="last_weight">Último peso:</string>
-    <string name="last_imc">Último IMC:</string>
+    <string name="last_weight">Ultimo peso:</string>
+    <string name="last_imc">Ultimo IMC:</string>
     <string name="no_data">Sem dados</string>
 
     <!-- Consultations -->
     <string name="new_consultation">Nova Consulta</string>
     <string name="consultation_date">Data</string>
     <string name="main_complaint">Queixa Principal</string>
-    <string name="recall_24h">Recordatório 24h</string>
-    <string name="evolution">Evolução/Conduta</string>
+    <string name="recall_24h">Recordatorio 24h</string>
+    <string name="evolution">Evolucao/Conduta</string>
     <string name="no_consultations">Nenhuma consulta registrada</string>
 
     <!-- Measurements -->
@@ -59,7 +67,7 @@
     <string name="height">Altura (cm)</string>
     <string name="waist">Cintura (cm)</string>
     <string name="imc">IMC</string>
-    <string name="imc_classification">Classificação IMC</string>
+    <string name="imc_classification">Classificacao IMC</string>
     <string name="no_measurements">Nenhuma medida registrada</string>
     <string name="imc_value">IMC: %.2f</string>
 
@@ -75,31 +83,36 @@
     <string name="new_plan">Novo Plano Alimentar</string>
     <string name="plan_date">Data do Plano</string>
     <string name="no_plans">Nenhum plano alimentar registrado</string>
-    <string name="meal_breakfast">Café da Manhã</string>
-    <string name="meal_morning_snack">Lanche da Manhã</string>
-    <string name="meal_lunch">Almoço</string>
+    <string name="meal_breakfast">Cafe da Manha</string>
+    <string name="meal_morning_snack">Lanche da Manha</string>
+    <string name="meal_lunch">Almoco</string>
     <string name="meal_afternoon_snack">Lanche da Tarde</string>
     <string name="meal_dinner">Jantar</string>
     <string name="meal_supper">Ceia</string>
     <string name="add_item">Adicionar item</string>
-    <string name="meal_observations">Observações</string>
+    <string name="add_meal">Adicionar refeicao</string>
+    <string name="meal_observations">Observacoes</string>
 
     <!-- Settings -->
-    <string name="settings">Configurações</string>
-    <string name="security">Segurança</string>
+    <string name="settings">Configuracoes</string>
+    <string name="security">Seguranca</string>
     <string name="change_pin">Alterar PIN</string>
     <string name="enable_biometric">Habilitar biometria</string>
     <string name="theme">Tema</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
     <string name="theme_system">Sistema</string>
+    <string name="logout">Sair</string>
+    <string name="logout_success">Sessao encerrada</string>
+    <string name="account">Conta</string>
 
     <!-- Common -->
     <string name="confirm">Confirmar</string>
     <string name="yes">Sim</string>
-    <string name="no">Não</string>
+    <string name="no">Nao</string>
     <string name="edit">Editar</string>
     <string name="kg">kg</string>
     <string name="cm">cm</string>
     <string name="date_format">dd/MM/yyyy</string>
+    <string name="error_generic">Algo deu errado. Tente novamente.</string>
 </resources>

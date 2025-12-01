@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
-            tools:text="João da Silva" />
+            tools:text="Joao da Silva" />
 
         <TextView
             android:id="@+id/tv_phone"
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            tools:text="Observações: Paciente hipertenso" />
+            tools:text="Observacoes: Paciente hipertenso" />
 
         <View
             android:layout_width="match_parent"
@@ -58,14 +58,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            tools:text="Último peso: 70.5 kg" />
+            tools:text="Ultimo peso: 70.5 kg" />
 
         <TextView
             android:id="@+id/tv_last_imc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            tools:text="Último IMC: 24.5 (Peso normal)" />
+            tools:text="Ultimo IMC: 24.5 (Peso normal)" />
+
+        <TextView
+            android:id="@+id/tv_recent_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text="Ultima consulta: 10/02/2025" />
 
     </LinearLayout>
 

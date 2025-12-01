@@ -5,19 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.nutriprontuario.databinding.FragmentPatientSummaryBinding
+import com.example.nutriprontuario.ui.patients.profile.PatientDetailViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PatientSummaryFragment : Fragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
     private val binding get() = _binding!!
 
-    private var patientId: Long = -1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        patientId = arguments?.getLong(ARG_PATIENT_ID) ?: -1
-    }
+    private val viewModel: PatientDetailViewModel by viewModels({ requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,16 +30,39 @@ class PatientSummaryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadPatientData()
+        observeViewModel()
     }
 
-    private fun loadPatientData() {
-        // Load patient data based on patientId
-        binding.tvName.text = "Maria Silva"
-        binding.tvPhone.text = "Telefone: (62) 98765-4321"
-        binding.tvNotes.text = "Observações: Paciente com restrição alimentar"
-        binding.tvLastWeight.text = "Último peso: 65.0 kg"
-        binding.tvLastImc.text = "Último IMC: 23.5 (Peso normal)"
+    private fun observeViewModel() {
+        viewModel.patient.observe(viewLifecycleOwner) { patient ->
+            patient?.let {
+                binding.tvName.text = it.name
+                binding.tvPhone.text = "Telefone: ${it.phone.orEmpty()}"
+                binding.tvNotes.text = "Observacoes: ${it.notes ?: "Sem observacoes"}"
+            }
+        }
+
+        viewModel.measurements.observe(viewLifecycleOwner) { list ->
+            val latest = list.firstOrNull()
+            if (latest != null) {
+                binding.tvLastWeight.text = "Ultimo peso: %.1f kg".format(latest.weight)
+                binding.tvLastImc.text = "Ultimo IMC: %.2f (${latest.imcClassification})".format(latest.imc)
+            } else {
+                binding.tvLastWeight.text = "Ultimo peso: --"
+                binding.tvLastImc.text = "Ultimo IMC: --"
+            }
+        }
+
+        viewModel.consultations.observe(viewLifecycleOwner) { list ->
+            val latestDate = list.firstOrNull()?.date
+            binding.tvRecentData.text = latestDate?.let { "Ultima consulta: ${formatDate(it)}" } ?: "Ultima consulta: --"
+        }
+    }
+
+    private fun formatDate(millis: Long): String {
+        if (millis == 0L) return "--"
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(Date(millis))
     }
 
     override fun onDestroyView() {

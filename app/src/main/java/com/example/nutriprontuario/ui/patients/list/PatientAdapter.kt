@@ -5,14 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nutriprontuario.data.model.Patient
 import com.example.nutriprontuario.databinding.ItemPatientBinding
-
-data class Patient(
-    val id: Long,
-    val name: String,
-    val phone: String?,
-    val lastAppointment: String?
-)
 
 class PatientAdapter(
     private val onItemClick: (Patient) -> Unit

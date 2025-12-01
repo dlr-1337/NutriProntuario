@@ -1,17 +1,27 @@
 package com.example.nutriprontuario.ui.patients.list
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.nutriprontuario.R
 import com.example.nutriprontuario.databinding.FragmentPatientListBinding
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class PatientListFragment : Fragment() {
 
@@ -19,6 +29,7 @@ class PatientListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: PatientAdapter
+    private val viewModel: PatientListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,11 +43,21 @@ class PatientListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val currentUser = Firebase.auth.currentUser
+        if (currentUser == null) {
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.nav_graph, true)
+                .build()
+            findNavController().navigate(R.id.authFragment, null, navOptions)
+            return
+        }
+
         setupToolbar()
         setupRecyclerView()
         setupFab()
         setupMenu()
-        loadSampleData()
+        observeViewModel()
+        viewModel.start(currentUser.uid)
     }
 
     private fun setupToolbar() {
@@ -74,7 +95,7 @@ class PatientListFragment : Fragment() {
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        // Filter adapter here
+                        viewModel.setQuery(newText.orEmpty())
                         return true
                     }
                 })
@@ -92,15 +113,20 @@ class PatientListFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun loadSampleData() {
-        // Sample data for demonstration
-        val samplePatients = listOf(
-            Patient(1, "Maria Silva", "(62) 98765-4321", "Último atendimento: 15/01/2025"),
-            Patient(2, "João Santos", "(62) 99876-5432", "Último atendimento: 10/01/2025"),
-            Patient(3, "Ana Paula", "(62) 97654-3210", "Nunca")
-        )
-        adapter.submitList(samplePatients)
-        binding.tvEmpty.isVisible = samplePatients.isEmpty()
+    private fun observeViewModel() {
+        viewModel.filtered.observe(viewLifecycleOwner) { patients ->
+            adapter.submitList(patients)
+            binding.tvEmpty.isVisible = patients.isEmpty()
+        }
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                Snackbar.make(
+                    binding.root,
+                    it.ifBlank { getString(R.string.error_generic) },
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
