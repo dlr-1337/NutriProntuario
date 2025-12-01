@@ -1,3 +1,105 @@
 <resources>
-    <string name="app_name">NutriProntuario</string>
+    <string name="app_name">NutriProntuário</string>
+
+    <!-- Splash and Unlock -->
+    <string name="app_title">NutriProntuário</string>
+    <string name="unlock_message">Autentique-se para continuar</string>
+    <string name="use_biometric">Usar biometria</string>
+    <string name="unlock">Desbloquear</string>
+
+    <!-- Patient List -->
+    <string name="patients_list">Pacientes</string>
+    <string name="search_patient">Buscar paciente</string>
+    <string name="add_patient">Adicionar paciente</string>
+    <string name="no_patients">Nenhum paciente cadastrado</string>
+    <string name="last_appointment">Último atendimento: %1$s</string>
+    <string name="never">Nunca</string>
+
+    <!-- Patient Form -->
+    <string name="new_patient">Novo Paciente</string>
+    <string name="edit_patient">Editar Paciente</string>
+    <string name="patient_name">Nome *</string>
+    <string name="patient_phone">Telefone</string>
+    <string name="patient_notes">Observações</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="name_required">Nome é obrigatório</string>
+    <string name="delete_patient">Excluir Paciente</string>
+    <string name="confirm_delete">Tem certeza que deseja excluir este paciente?</string>
+    <string name="delete">Excluir</string>
+
+    <!-- Patient Profile -->
+    <string name="patient_profile">Perfil do Paciente</string>
+    <string name="tab_summary">Resumo</string>
+    <string name="tab_consultations">Consultas</string>
+    <string name="tab_measurements">Medidas</string>
+    <string name="tab_plans">Planos</string>
+
+    <!-- Summary Tab -->
+    <string name="patient_info">Informações do Paciente</string>
+    <string name="phone">Telefone:</string>
+    <string name="notes">Observações:</string>
+    <string name="no_notes">Sem observações</string>
+    <string name="recent_data">Dados Recentes</string>
+    <string name="last_weight">Último peso:</string>
+    <string name="last_imc">Último IMC:</string>
+    <string name="no_data">Sem dados</string>
+
+    <!-- Consultations -->
+    <string name="new_consultation">Nova Consulta</string>
+    <string name="consultation_date">Data</string>
+    <string name="main_complaint">Queixa Principal</string>
+    <string name="recall_24h">Recordatório 24h</string>
+    <string name="evolution">Evolução/Conduta</string>
+    <string name="no_consultations">Nenhuma consulta registrada</string>
+
+    <!-- Measurements -->
+    <string name="new_measurement">Nova Medida</string>
+    <string name="weight">Peso (kg)</string>
+    <string name="height">Altura (cm)</string>
+    <string name="waist">Cintura (cm)</string>
+    <string name="imc">IMC</string>
+    <string name="imc_classification">Classificação IMC</string>
+    <string name="no_measurements">Nenhuma medida registrada</string>
+    <string name="imc_value">IMC: %.2f</string>
+
+    <!-- IMC Classifications -->
+    <string name="imc_underweight">Abaixo do peso</string>
+    <string name="imc_normal">Peso normal</string>
+    <string name="imc_overweight">Sobrepeso</string>
+    <string name="imc_obese1">Obesidade grau I</string>
+    <string name="imc_obese2">Obesidade grau II</string>
+    <string name="imc_obese3">Obesidade grau III</string>
+
+    <!-- Meal Plans -->
+    <string name="new_plan">Novo Plano Alimentar</string>
+    <string name="plan_date">Data do Plano</string>
+    <string name="no_plans">Nenhum plano alimentar registrado</string>
+    <string name="meal_breakfast">Café da Manhã</string>
+    <string name="meal_morning_snack">Lanche da Manhã</string>
+    <string name="meal_lunch">Almoço</string>
+    <string name="meal_afternoon_snack">Lanche da Tarde</string>
+    <string name="meal_dinner">Jantar</string>
+    <string name="meal_supper">Ceia</string>
+    <string name="add_item">Adicionar item</string>
+    <string name="meal_observations">Observações</string>
+
+    <!-- Settings -->
+    <string name="settings">Configurações</string>
+    <string name="security">Segurança</string>
+    <string name="change_pin">Alterar PIN</string>
+    <string name="enable_biometric">Habilitar biometria</string>
+    <string name="theme">Tema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
+    <string name="theme_system">Sistema</string>
+
+    <!-- Common -->
+    <string name="confirm">Confirmar</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="edit">Editar</string>
+    <string name="kg">kg</string>
+    <string name="cm">cm</string>
+    <string name="date_format">dd/MM/yyyy</string>
 </resources>
