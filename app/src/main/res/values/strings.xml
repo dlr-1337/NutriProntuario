@@ -105,6 +105,7 @@
     <string name="logout">Sair</string>
     <string name="logout_success">Sessao encerrada</string>
     <string name="account">Conta</string>
+    <string name="more">Mais</string>
 
     <!-- Common -->
     <string name="confirm">Confirmar</string>

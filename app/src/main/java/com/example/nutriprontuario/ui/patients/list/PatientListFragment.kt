@@ -18,7 +18,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.nutriprontuario.R
+import com.example.nutriprontuario.data.model.Patient
 import com.example.nutriprontuario.databinding.FragmentPatientListBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -65,17 +67,27 @@ class PatientListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PatientAdapter { patient ->
-            val action = PatientListFragmentDirections
-                .actionListToProfile(patient.id)
-            findNavController().navigate(action)
-        }
+        adapter = PatientAdapter(
+            onItemClick = { patient ->
+                val action = PatientListFragmentDirections
+                    .actionListToProfile(patient.id)
+                findNavController().navigate(action)
+            },
+            onEdit = { patient ->
+                val action = PatientListFragmentDirections.actionListToForm(patient.id)
+                findNavController().navigate(action)
+            },
+            onDelete = { patient ->
+                confirmDelete(patient)
+            }
+        )
         binding.rvPatients.adapter = adapter
     }
 
     private fun setupFab() {
         binding.fabAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_list_to_form)
+            val action = PatientListFragmentDirections.actionListToForm(-1L)
+            findNavController().navigate(action)
         }
     }
 
@@ -127,6 +139,20 @@ class PatientListFragment : Fragment() {
                 ).show()
             }
         }
+    }
+
+    private fun confirmDelete(patient: Patient) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.delete_patient)
+            .setMessage(R.string.confirm_delete)
+            .setPositiveButton(R.string.delete) { _, _ ->
+                viewModel.deletePatient(patient.id) { success, error ->
+                    val msg = if (success) getString(R.string.delete) else error ?: getString(R.string.error_generic)
+                    Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
+                }
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     override fun onDestroyView() {

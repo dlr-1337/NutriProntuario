@@ -23,6 +23,10 @@ class PatientListViewModel(
     val loading = MutableLiveData(false)
     val error = MutableLiveData<String?>(null)
 
+    fun deletePatient(patientId: Long, onComplete: (Boolean, String?) -> Unit) {
+        repository.deletePatientCascade(patientId, onComplete)
+    }
+
     fun start(ownerUid: String) {
         if (listener != null) return
         loading.value = true
