@@ -1,9 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!--
+        Temas do NutriProntuario
+
+        Define o tema visual do aplicativo usando Material Design 3 (Material You).
+        O tema base usa Theme.Material3.DayNight.NoActionBar, que suporta:
+        - Alternância automática entre modo claro e escuro baseado nas configurações do sistema
+        - Cores dinâmicas do Material You (adaptadas ao wallpaper do usuário no Android 12+)
+        - Sem ActionBar (usa Toolbar customizado em cada tela)
+    -->
+
+    <!-- Tema base da aplicação (herda de Material Design 3 com suporte a modo noturno) -->
     <style name="Base.Theme.NutriProntuario" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!--
+            Personalizações do tema podem ser adicionadas aqui.
+            Por padrão, usa as cores dinâmicas do Material You.
+
+            Exemplos de customização:
+            <item name="colorPrimary">@color/my_light_primary</item>
+            <item name="colorSecondary">@color/my_light_secondary</item>
+            <item name="android:statusBarColor">@android:color/transparent</item>
+        -->
     </style>
 
+    <!-- Tema principal da aplicação (herda do tema base sem modificações) -->
     <style name="Theme.NutriProntuario" parent="Base.Theme.NutriProntuario" />
 </resources>

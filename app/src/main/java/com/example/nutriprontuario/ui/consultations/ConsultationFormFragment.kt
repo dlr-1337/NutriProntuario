@@ -19,14 +19,28 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Fragment para cadastro e edição de consultas de pacientes.
+ *
+ * Permite registrar informações de uma consulta nutricional incluindo:
+ * - Data da consulta
+ * - Queixa principal do paciente
+ * - Recordatório alimentar de 24 horas
+ * - Evolução e conduta profissional
+ *
+ * Os dados são salvos no Firestore na subcoleção 'consultations' do paciente.
+ */
 class ConsultationFormFragment : Fragment() {
 
+    // ViewBinding para acessar as views do layout
     private var _binding: FragmentConsultationFormBinding? = null
     private val binding get() = _binding!!
 
+    // Arguments recebidos via Safe Args (contém patientId)
     private val args: ConsultationFormFragmentArgs by navArgs()
     private val viewModel: ConsultationFormViewModel by viewModels()
 
+    // Data selecionada para a consulta (padrão: hoje)
     private var selectedDateMillis: Long = MaterialDatePicker.todayInUtcMilliseconds()
 
     override fun onCreateView(
@@ -50,6 +64,10 @@ class ConsultationFormFragment : Fragment() {
         observeViewModel()
     }
 
+    /**
+     * Configura o seletor de data usando MaterialDatePicker.
+     * Ao clicar no campo de data, exibe um calendário para seleção.
+     */
     private fun setupDatePicker() {
         binding.etDate.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
@@ -66,6 +84,10 @@ class ConsultationFormFragment : Fragment() {
         }
     }
 
+    /**
+     * Observa o estado do ViewModel para reagir a erros e sucesso no salvamento.
+     * Exibe mensagens via Snackbar e navega de volta em caso de sucesso.
+     */
     private fun observeViewModel() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             state.error?.let {
@@ -82,9 +104,15 @@ class ConsultationFormFragment : Fragment() {
         }
     }
 
+    /**
+     * Valida e salva os dados da consulta no Firestore.
+     * Verifica se o usuário está autenticado antes de salvar.
+     * Redireciona para login se a sessão expirou.
+     */
     private fun saveConsultation() {
         val currentUser = Firebase.auth.currentUser
         if (currentUser == null) {
+            // Usuário não autenticado - redireciona para login
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.nav_graph, true)
                 .build()
@@ -92,6 +120,7 @@ class ConsultationFormFragment : Fragment() {
             return
         }
 
+        // Salva a consulta com os dados do formulário
         viewModel.saveConsultation(
             patientId = args.patientId,
             ownerUid = currentUser.uid,
@@ -102,6 +131,9 @@ class ConsultationFormFragment : Fragment() {
         )
     }
 
+    /**
+     * Formata um timestamp em milissegundos para o formato dd/MM/yyyy.
+     */
     private fun formatDate(millis: Long): String {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return sdf.format(Date(millis))

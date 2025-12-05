@@ -18,17 +18,29 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Fragment que exibe a lista de planos alimentares de um paciente.
+ *
+ * Apresenta todos os planos alimentares registrados em formato de cards,
+ * permite visualizar detalhes de cada plano (incluindo todas as refeições e itens) em um diálogo
+ * e oferece a opção de excluir planos. Também permite adicionar novos planos através de um FAB.
+ * Faz parte do ViewPager2 na tela de perfil do paciente.
+ */
 class PatientPlansFragment : Fragment() {
 
+    // ViewBinding para acessar as views do layout
     private var _binding: FragmentPatientPlansBinding? = null
     private val binding get() = _binding!!
 
     private var patientId: Long = -1
+
+    // ViewModel compartilhado com o fragment pai (PatientProfileFragment)
     private val viewModel: PatientDetailViewModel by viewModels({ requireParentFragment() })
     private lateinit var adapter: PlanAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Recupera o ID do paciente dos argumentos
         patientId = arguments?.getLong(ARG_PATIENT_ID) ?: -1
     }
 
@@ -49,6 +61,10 @@ class PatientPlansFragment : Fragment() {
         observeViewModel()
     }
 
+    /**
+     * Configura o RecyclerView com o adapter de planos alimentares.
+     * O click em um item abre um diálogo com os detalhes do plano.
+     */
     private fun setupRecyclerView() {
         adapter = PlanAdapter { plan ->
             showDetailsDialog(plan)
@@ -56,6 +72,10 @@ class PatientPlansFragment : Fragment() {
         binding.rvPlans.adapter = adapter
     }
 
+    /**
+     * Configura o botão FAB para adicionar novo plano alimentar.
+     * Navega para a tela de formulário de plano.
+     */
     private fun setupFab() {
         binding.fabAdd.setOnClickListener {
             val action = PatientProfileFragmentDirections
@@ -64,6 +84,10 @@ class PatientPlansFragment : Fragment() {
         }
     }
 
+    /**
+     * Observa a lista de planos alimentares no ViewModel.
+     * Atualiza o adapter e exibe/oculta mensagem de lista vazia.
+     */
     private fun observeViewModel() {
         viewModel.plans.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
@@ -71,7 +95,13 @@ class PatientPlansFragment : Fragment() {
         }
     }
 
+    /**
+     * Exibe um diálogo com os detalhes completos do plano alimentar.
+     * Mostra todas as refeições, itens de cada refeição e observações.
+     * Oferece opção de excluir o plano.
+     */
     private fun showDetailsDialog(plan: com.example.nutriprontuario.data.model.MealPlan) {
+        // Formata as refeições com seus itens
         val mealsText = plan.meals.joinToString("\n\n") { meal ->
             val items = meal.items.split("\n").joinToString("\n") { "- $it" }
             buildString {
@@ -93,6 +123,7 @@ class PatientPlansFragment : Fragment() {
             .setMessage(message)
             .setPositiveButton(android.R.string.ok, null)
             .setNegativeButton(R.string.delete) { _, _ ->
+                // Exclui o plano e exibe feedback ao usuário
                 viewModel.deletePlan(plan.id) { success, error ->
                     val text = if (success) "Plano apagado" else error ?: getString(R.string.error_generic)
                     Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show()
@@ -101,6 +132,9 @@ class PatientPlansFragment : Fragment() {
             .show()
     }
 
+    /**
+     * Formata um timestamp em milissegundos para o formato dd/MM/yyyy.
+     */
     private fun formatDate(millis: Long): String {
         if (millis == 0L) return "--"
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -115,6 +149,9 @@ class PatientPlansFragment : Fragment() {
     companion object {
         private const val ARG_PATIENT_ID = "patient_id"
 
+        /**
+         * Método factory para criar uma nova instância do fragment com o ID do paciente.
+         */
         fun newInstance(patientId: Long) = PatientPlansFragment().apply {
             arguments = Bundle().apply {
                 putLong(ARG_PATIENT_ID, patientId)

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Aba de resumo do paciente - exibe informações principais e dados recentes -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Título da seção de informações do paciente -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,6 +20,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <!-- Nome completo do paciente -->
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -26,6 +29,7 @@
             android:textSize="16sp"
             tools:text="Joao da Silva" />
 
+        <!-- Telefone de contato do paciente -->
         <TextView
             android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
@@ -33,6 +37,7 @@
             android:layout_marginTop="4dp"
             tools:text="Telefone: (62) 99999-9999" />
 
+        <!-- Observações e anotações sobre o paciente -->
         <TextView
             android:id="@+id/tv_notes"
             android:layout_width="wrap_content"
@@ -40,12 +45,14 @@
             android:layout_marginTop="4dp"
             tools:text="Observacoes: Paciente hipertenso" />
 
+        <!-- Divisor visual entre seções -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="16dp"
             android:background="?android:attr/listDivider" />
 
+        <!-- Título da seção de dados recentes -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,6 +60,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <!-- Última medição de peso registrada -->
         <TextView
             android:id="@+id/tv_last_weight"
             android:layout_width="wrap_content"
@@ -60,6 +68,7 @@
             android:layout_marginTop="8dp"
             tools:text="Ultimo peso: 70.5 kg" />
 
+        <!-- Último IMC calculado com classificação -->
         <TextView
             android:id="@+id/tv_last_imc"
             android:layout_width="wrap_content"
@@ -67,6 +76,7 @@
             android:layout_marginTop="4dp"
             tools:text="Ultimo IMC: 24.5 (Peso normal)" />
 
+        <!-- Data da última consulta registrada -->
         <TextView
             android:id="@+id/tv_recent_data"
             android:layout_width="wrap_content"

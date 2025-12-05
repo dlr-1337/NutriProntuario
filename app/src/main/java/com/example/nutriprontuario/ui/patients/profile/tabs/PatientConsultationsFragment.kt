@@ -18,17 +18,29 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Fragment que exibe a lista de consultas de um paciente.
+ *
+ * Apresenta todas as consultas registradas em formato de cards, permite visualizar
+ * detalhes de cada consulta em um diálogo e oferece a opção de excluir consultas.
+ * Também permite adicionar novas consultas através de um FAB.
+ * Faz parte do ViewPager2 na tela de perfil do paciente.
+ */
 class PatientConsultationsFragment : Fragment() {
 
+    // ViewBinding para acessar as views do layout
     private var _binding: FragmentPatientConsultationsBinding? = null
     private val binding get() = _binding!!
 
     private var patientId: Long = -1
+
+    // ViewModel compartilhado com o fragment pai (PatientProfileFragment)
     private val viewModel: PatientDetailViewModel by viewModels({ requireParentFragment() })
     private lateinit var adapter: ConsultationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Recupera o ID do paciente dos argumentos
         patientId = arguments?.getLong(ARG_PATIENT_ID) ?: -1
     }
 
@@ -49,6 +61,10 @@ class PatientConsultationsFragment : Fragment() {
         observeViewModel()
     }
 
+    /**
+     * Configura o RecyclerView com o adapter de consultas.
+     * O click em um item abre um diálogo com os detalhes da consulta.
+     */
     private fun setupRecyclerView() {
         adapter = ConsultationAdapter { consultation ->
             showDetailsDialog(consultation)
@@ -56,6 +72,10 @@ class PatientConsultationsFragment : Fragment() {
         binding.rvConsultations.adapter = adapter
     }
 
+    /**
+     * Configura o botão FAB para adicionar nova consulta.
+     * Navega para a tela de formulário de consulta.
+     */
     private fun setupFab() {
         binding.fabAdd.setOnClickListener {
             val action = PatientProfileFragmentDirections
@@ -64,6 +84,10 @@ class PatientConsultationsFragment : Fragment() {
         }
     }
 
+    /**
+     * Observa a lista de consultas no ViewModel.
+     * Atualiza o adapter e exibe/oculta mensagem de lista vazia.
+     */
     private fun observeViewModel() {
         viewModel.consultations.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
@@ -71,6 +95,11 @@ class PatientConsultationsFragment : Fragment() {
         }
     }
 
+    /**
+     * Exibe um diálogo com os detalhes completos da consulta.
+     * Permite visualizar queixa, recordatório 24h e evolução/conduta.
+     * Oferece opção de excluir a consulta.
+     */
     private fun showDetailsDialog(consultation: com.example.nutriprontuario.data.model.Consultation) {
         val message = buildString {
             append("Data: ${formatDate(consultation.date)}\n\n")
@@ -90,6 +119,7 @@ class PatientConsultationsFragment : Fragment() {
             .setMessage(message.ifBlank { "Sem detalhes" })
             .setPositiveButton(android.R.string.ok, null)
             .setNegativeButton(R.string.delete) { _, _ ->
+                // Exclui a consulta e exibe feedback ao usuário
                 viewModel.deleteConsultation(consultation.id) { success, error ->
                     val text = if (success) "Consulta apagada" else error ?: getString(R.string.error_generic)
                     Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show()
@@ -98,6 +128,9 @@ class PatientConsultationsFragment : Fragment() {
             .show()
     }
 
+    /**
+     * Formata um timestamp em milissegundos para o formato dd/MM/yyyy.
+     */
     private fun formatDate(millis: Long): String {
         if (millis == 0L) return "--"
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -112,6 +145,9 @@ class PatientConsultationsFragment : Fragment() {
     companion object {
         private const val ARG_PATIENT_ID = "patient_id"
 
+        /**
+         * Método factory para criar uma nova instância do fragment com o ID do paciente.
+         */
         fun newInstance(patientId: Long) = PatientConsultationsFragment().apply {
             arguments = Bundle().apply {
                 putLong(ARG_PATIENT_ID, patientId)

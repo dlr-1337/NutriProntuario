@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Formulário de consulta - permite registrar evolução clínica, queixa principal e recordatório alimentar -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,7 @@
     android:padding="16dp"
     tools:context=".ui.consultations.ConsultationFormFragment">
 
+    <!-- Título do formulário - "Evolução" -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
@@ -20,6 +22,7 @@
         app:layout_constraintEnd_toStartOf="@id/btn_save"
         app:layout_constraintHorizontal_bias="0" />
 
+    <!-- Botão de salvar posicionado no topo à direita -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         style="@style/Widget.Material3.Button.TonalButton"
@@ -35,6 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_title" />
 
+    <!-- Container rolável para os campos do formulário -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -50,6 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Campo de seleção de data da consulta - abre seletor de data ao clicar -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_date"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -70,6 +75,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo para registrar a queixa principal do paciente -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_complaint"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -91,6 +97,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo para recordatório alimentar de 24 horas -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_recall"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -112,6 +119,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo para registrar a evolução clínica do paciente -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_evolution"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"

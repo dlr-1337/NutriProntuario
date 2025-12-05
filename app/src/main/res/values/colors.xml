@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Definições de Cores do NutriProntuario
+
+    Define as cores básicas utilizadas no aplicativo.
+    O tema principal usa Material Design 3 (Material You), que gera
+    cores dinâmicas baseadas no sistema, mas estas cores básicas
+    são utilizadas como fallback e para elementos específicos.
+-->
 <resources>
+    <!-- Cor preta pura (usada para texto e ícones em tema claro) -->
     <color name="black">#FF000000</color>
+
+    <!-- Cor branca pura (usada para texto e ícones em tema escuro) -->
     <color name="white">#FFFFFFFF</color>
 </resources>

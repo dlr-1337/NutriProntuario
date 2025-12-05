@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Formulário de cadastro/edição de paciente - permite criar ou modificar dados do paciente -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,7 @@
     android:padding="16dp"
     tools:context=".ui.patients.form.PatientFormFragment">
 
+    <!-- Título do formulário - exibe "Novo Paciente" ou "Editar Paciente" -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
@@ -20,6 +22,7 @@
         app:layout_constraintEnd_toStartOf="@id/btn_save"
         app:layout_constraintHorizontal_bias="0" />
 
+    <!-- Botão de salvar posicionado no topo à direita -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         style="@style/Widget.Material3.Button.TonalButton"
@@ -35,6 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_title" />
 
+    <!-- Container rolável para os campos do formulário -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/form_scroll"
         android:layout_width="0dp"
@@ -51,6 +55,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Campo de entrada para nome do paciente -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_name"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -70,6 +75,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo de entrada para telefone do paciente -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_phone"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -89,6 +95,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo de entrada para observações sobre o paciente -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_notes"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"

@@ -1,7 +1,17 @@
 <resources>
+    <!--
+        Strings do NutriProntuario
+
+        Centraliza todos os textos do aplicativo para facilitar manutenção e internacionalização.
+        Strings estão organizadas por funcionalidade/tela para melhor organização.
+    -->
+
+    <!-- Nome do aplicativo (exibido no launcher) -->
     <string name="app_name">NutriProntuario</string>
 
-    <!-- Splash and Unlock -->
+    <!-- ==================== AUTENTICAÇÃO E SPLASH ==================== -->
+    <!-- Telas de splash, PIN e login/cadastro com Firebase -->
+
     <string name="app_title">NutriProntuario</string>
     <string name="unlock_message">Autentique-se para continuar</string>
     <string name="use_biometric">Entrar com e-mail</string>
@@ -15,15 +25,20 @@
     <string name="auth_required_fields">Preencha e-mail e senha.</string>
     <string name="auth_invalid_credentials">Credenciais invalidas. Verifique e tente novamente.</string>
 
-    <!-- Patient List -->
+    <!-- ==================== LISTA DE PACIENTES ==================== -->
+    <!-- Tela principal com lista de pacientes, busca e último atendimento -->
+
     <string name="patients_list">Pacientes</string>
     <string name="search_patient">Buscar paciente</string>
     <string name="add_patient">Adicionar paciente</string>
     <string name="no_patients">Nenhum paciente cadastrado</string>
+    <!-- %1$s = data do último atendimento formatada -->
     <string name="last_appointment">Ultimo atendimento: %1$s</string>
     <string name="never">Nunca</string>
 
-    <!-- Patient Form -->
+    <!-- ==================== FORMULÁRIO DE PACIENTE ==================== -->
+    <!-- Tela de criação e edição de dados do paciente -->
+
     <string name="new_patient">Novo Paciente</string>
     <string name="edit_patient">Editar Paciente</string>
     <string name="patient_name">Nome *</string>
@@ -36,14 +51,19 @@
     <string name="confirm_delete">Tem certeza que deseja excluir este paciente?</string>
     <string name="delete">Excluir</string>
 
-    <!-- Patient Profile -->
+    <!-- ==================== PERFIL DO PACIENTE ==================== -->
+    <!-- Tela com abas: resumo, consultas, medidas e planos alimentares -->
+
     <string name="patient_profile">Perfil do Paciente</string>
+    <!-- Nomes das abas do ViewPager2 -->
     <string name="tab_summary">Resumo</string>
     <string name="tab_consultations">Consultas</string>
     <string name="tab_measurements">Medidas</string>
     <string name="tab_plans">Planos</string>
 
-    <!-- Summary Tab -->
+    <!-- ==================== ABA RESUMO ==================== -->
+    <!-- Informações gerais e dados recentes do paciente -->
+
     <string name="patient_info">Informacoes do Paciente</string>
     <string name="phone">Telefone:</string>
     <string name="notes">Observacoes:</string>
@@ -53,7 +73,9 @@
     <string name="last_imc">Ultimo IMC:</string>
     <string name="no_data">Sem dados</string>
 
-    <!-- Consultations -->
+    <!-- ==================== CONSULTAS ==================== -->
+    <!-- Formulário e lista de consultas nutricionais -->
+
     <string name="new_consultation">Nova Consulta</string>
     <string name="consultation_date">Data</string>
     <string name="main_complaint">Queixa Principal</string>
@@ -61,7 +83,9 @@
     <string name="evolution">Evolucao/Conduta</string>
     <string name="no_consultations">Nenhuma consulta registrada</string>
 
-    <!-- Measurements -->
+    <!-- ==================== MEDIDAS ANTROPOMÉTRICAS ==================== -->
+    <!-- Formulário e lista de medidas (peso, altura, circunferências, IMC) -->
+
     <string name="new_measurement">Nova Medida</string>
     <string name="weight">Peso (kg)</string>
     <string name="height">Altura (cm)</string>
@@ -69,51 +93,76 @@
     <string name="imc">IMC</string>
     <string name="imc_classification">Classificacao IMC</string>
     <string name="no_measurements">Nenhuma medida registrada</string>
+    <!-- %.2f = valor do IMC com 2 casas decimais -->
     <string name="imc_value">IMC: %.2f</string>
 
-    <!-- IMC Classifications -->
-    <string name="imc_underweight">Abaixo do peso</string>
-    <string name="imc_normal">Peso normal</string>
-    <string name="imc_overweight">Sobrepeso</string>
-    <string name="imc_obese1">Obesidade grau I</string>
-    <string name="imc_obese2">Obesidade grau II</string>
-    <string name="imc_obese3">Obesidade grau III</string>
+    <!-- ==================== CLASSIFICAÇÕES DE IMC ==================== -->
+    <!-- Categorias de classificação do Índice de Massa Corporal (OMS) -->
 
-    <!-- Meal Plans -->
+    <string name="imc_underweight">Abaixo do peso</string>      <!-- IMC < 18.5 -->
+    <string name="imc_normal">Peso normal</string>             <!-- IMC 18.5-24.9 -->
+    <string name="imc_overweight">Sobrepeso</string>           <!-- IMC 25.0-29.9 -->
+    <string name="imc_obese1">Obesidade grau I</string>        <!-- IMC 30.0-34.9 -->
+    <string name="imc_obese2">Obesidade grau II</string>       <!-- IMC 35.0-39.9 -->
+    <string name="imc_obese3">Obesidade grau III</string>      <!-- IMC >= 40.0 -->
+
+    <!-- ==================== PLANOS ALIMENTARES ==================== -->
+    <!-- Formulário e lista de planos com refeições e itens dinâmicos -->
+
     <string name="new_plan">Novo Plano Alimentar</string>
     <string name="plan_date">Data do Plano</string>
     <string name="no_plans">Nenhum plano alimentar registrado</string>
+
+    <!-- Nomes padrão das refeições -->
     <string name="meal_breakfast">Cafe da Manha</string>
     <string name="meal_morning_snack">Lanche da Manha</string>
     <string name="meal_lunch">Almoco</string>
     <string name="meal_afternoon_snack">Lanche da Tarde</string>
     <string name="meal_dinner">Jantar</string>
     <string name="meal_supper">Ceia</string>
+
+    <!-- Ações do formulário de plano -->
     <string name="add_item">Adicionar item</string>
     <string name="add_meal">Adicionar refeicao</string>
     <string name="meal_observations">Observacoes</string>
 
-    <!-- Settings -->
+    <!-- ==================== CONFIGURAÇÕES ==================== -->
+    <!-- Tela de configurações: segurança, tema e conta -->
+
     <string name="settings">Configuracoes</string>
+
+    <!-- Seção de segurança -->
     <string name="security">Seguranca</string>
     <string name="change_pin">Alterar PIN</string>
     <string name="enable_biometric">Habilitar biometria</string>
+
+    <!-- Seção de tema -->
     <string name="theme">Tema</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
     <string name="theme_system">Sistema</string>
+
+    <!-- Seção de conta -->
     <string name="logout">Sair</string>
     <string name="logout_success">Sessao encerrada</string>
     <string name="account">Conta</string>
     <string name="more">Mais</string>
 
-    <!-- Common -->
+    <!-- ==================== STRINGS COMUNS ==================== -->
+    <!-- Textos genéricos reutilizados em várias telas -->
+
     <string name="confirm">Confirmar</string>
     <string name="yes">Sim</string>
     <string name="no">Nao</string>
     <string name="edit">Editar</string>
+
+    <!-- Unidades de medida -->
     <string name="kg">kg</string>
     <string name="cm">cm</string>
+
+    <!-- Formatos -->
     <string name="date_format">dd/MM/yyyy</string>
+
+    <!-- Mensagens de erro -->
     <string name="error_generic">Algo deu errado. Tente novamente.</string>
 </resources>

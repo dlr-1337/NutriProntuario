@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Grafo de Navegação do NutriProntuario
+
+    Define o fluxo de navegação entre as telas (fragments) do aplicativo usando o Navigation Component.
+    O destino inicial (startDestination) é o SplashUnlockFragment, que verifica autenticação e PIN.
+
+    Fluxo principal:
+    1. SplashUnlock → verifica PIN/biometria → Auth (se necessário) → Lista de Pacientes
+    2. Lista de Pacientes → Formulário de Paciente | Perfil do Paciente | Configurações
+    3. Perfil do Paciente → Formulários de Consulta, Medida ou Plano Alimentar
+-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashUnlockFragment">
 
+    <!-- Tela de Autenticação (Login/Cadastro com Firebase) -->
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.nutriprontuario.ui.auth.AuthFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_auth">
+        <!-- Navega para lista de pacientes após login bem-sucedido, limpando a pilha de navegação -->
         <action
             android:id="@+id/action_authFragment_to_patientListFragment"
             app:destination="@id/patientListFragment"
@@ -17,14 +30,17 @@
             app:popUpToInclusive="true" />
     </fragment>
 
+    <!-- Tela de Splash com verificação de PIN/Biometria -->
     <fragment
         android:id="@+id/splashUnlockFragment"
         android:name="com.example.nutriprontuario.ui.splash.SplashUnlockFragment"
         android:label="@string/app_title"
         tools:layout="@layout/fragment_splash_unlock">
+        <!-- Navega para autenticação se usuário não estiver logado no Firebase -->
         <action
             android:id="@+id/action_splash_to_auth"
             app:destination="@id/authFragment" />
+        <!-- Navega para lista de pacientes se PIN/biometria validados e usuário logado -->
         <action
             android:id="@+id/action_splash_to_patientList"
             app:destination="@id/patientListFragment"
@@ -32,85 +48,104 @@
             app:popUpToInclusive="true" />
     </fragment>
 
+    <!-- Tela principal: Lista de Pacientes com busca e filtro -->
     <fragment
         android:id="@+id/patientListFragment"
         android:name="com.example.nutriprontuario.ui.patients.list.PatientListFragment"
         android:label="@string/patients_list"
         tools:layout="@layout/fragment_patient_list">
+        <!-- Navega para formulário de criação/edição de paciente -->
         <action
             android:id="@+id/action_list_to_form"
             app:destination="@id/patientFormFragment" />
+        <!-- Navega para perfil do paciente (com abas de resumo, consultas, medidas e planos) -->
         <action
             android:id="@+id/action_list_to_profile"
             app:destination="@id/patientProfileFragment" />
+        <!-- Navega para tela de configurações -->
         <action
             android:id="@+id/action_list_to_settings"
             app:destination="@id/settingsFragment" />
     </fragment>
 
+    <!-- Formulário de Paciente (Criar/Editar) -->
     <fragment
         android:id="@+id/patientFormFragment"
         android:name="com.example.nutriprontuario.ui.patients.form.PatientFormFragment"
         android:label="@string/new_patient"
         tools:layout="@layout/fragment_patient_form">
+        <!-- Argumento opcional: ID do paciente (-1 para novo paciente) -->
         <argument
             android:name="patientId"
             android:defaultValue="-1L"
             app:argType="long" />
     </fragment>
 
+    <!-- Perfil do Paciente com ViewPager2 (abas: resumo, consultas, medidas, planos) -->
     <fragment
         android:id="@+id/patientProfileFragment"
         android:name="com.example.nutriprontuario.ui.patients.profile.PatientProfileFragment"
         android:label="@string/patient_profile"
         tools:layout="@layout/fragment_patient_profile">
+        <!-- Argumento obrigatório: ID do paciente -->
         <argument
             android:name="patientId"
             app:argType="long" />
+        <!-- Navega para formulário de nova consulta -->
         <action
             android:id="@+id/action_profile_to_consultation"
             app:destination="@id/consultationFormFragment" />
+        <!-- Navega para formulário de nova medida -->
         <action
             android:id="@+id/action_profile_to_measurement"
             app:destination="@id/measurementFormFragment" />
+        <!-- Navega para formulário de novo plano alimentar -->
         <action
             android:id="@+id/action_profile_to_plan"
             app:destination="@id/planFormFragment" />
+        <!-- Navega para edição dos dados do paciente -->
         <action
             android:id="@+id/action_profile_to_edit_patient"
             app:destination="@id/patientFormFragment" />
     </fragment>
 
+    <!-- Formulário de Consulta (nova consulta para um paciente) -->
     <fragment
         android:id="@+id/consultationFormFragment"
         android:name="com.example.nutriprontuario.ui.consultations.ConsultationFormFragment"
         android:label="@string/new_consultation"
         tools:layout="@layout/fragment_consultation_form">
+        <!-- Argumento obrigatório: ID do paciente -->
         <argument
             android:name="patientId"
             app:argType="long" />
     </fragment>
 
+    <!-- Formulário de Medidas (peso, altura, circunferências com cálculo de IMC) -->
     <fragment
         android:id="@+id/measurementFormFragment"
         android:name="com.example.nutriprontuario.ui.measurements.MeasurementFormFragment"
         android:label="@string/new_measurement"
         tools:layout="@layout/fragment_measurement_form">
+        <!-- Argumento obrigatório: ID do paciente -->
         <argument
             android:name="patientId"
             app:argType="long" />
     </fragment>
 
+    <!-- Formulário de Plano Alimentar (refeições e itens dinâmicos) -->
     <fragment
         android:id="@+id/planFormFragment"
         android:name="com.example.nutriprontuario.ui.plans.PlanFormFragment"
         android:label="@string/new_plan"
         tools:layout="@layout/fragment_plan_form">
+        <!-- Argumento obrigatório: ID do paciente -->
         <argument
             android:name="patientId"
             app:argType="long" />
     </fragment>
 
+    <!-- Tela de Configurações (alterar PIN, tema, logout) -->
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.nutriprontuario.ui.settings.SettingsFragment"

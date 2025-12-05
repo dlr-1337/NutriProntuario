@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Tela de splash/desbloqueio - exibe logo e opção de autenticação biométrica ou PIN -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,6 +7,7 @@
     android:background="?attr/colorPrimary"
     android:padding="32dp">
 
+    <!-- Logo/ícone de impressão digital centralizado -->
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="120dp"
@@ -19,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
+    <!-- Título do aplicativo -->
     <TextView
         android:id="@+id/tv_app_title"
         android:layout_width="wrap_content"
@@ -33,6 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
+    <!-- Mensagem orientando o usuário a desbloquear o app -->
     <TextView
         android:id="@+id/tv_unlock_message"
         android:layout_width="wrap_content"
@@ -46,6 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_app_title" />
 
+    <!-- Botão para ativar autenticação biométrica -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_biometric"
         android:layout_width="wrap_content"

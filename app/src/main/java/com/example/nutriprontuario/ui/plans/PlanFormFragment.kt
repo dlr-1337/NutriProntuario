@@ -24,14 +24,30 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Fragment para criação e edição de planos alimentares.
+ *
+ * Permite criar um plano alimentar completo com:
+ * - Data do plano
+ * - Múltiplas refeições (café da manhã, almoço, jantar, etc.)
+ * - Itens alimentares para cada refeição
+ * - Observações específicas por refeição
+ *
+ * O usuário pode adicionar/remover refeições dinamicamente e adicionar/remover
+ * itens em cada refeição. Os dados são salvos no Firestore na subcoleção 'plans'.
+ */
 class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
 
+    // ViewBinding para acessar as views do layout
     private var _binding: FragmentPlanFormBinding? = null
     private val binding get() = _binding!!
 
+    // Arguments recebidos via Safe Args (contém patientId)
     private val args: PlanFormFragmentArgs by navArgs()
     private val viewModel: PlanFormViewModel by viewModels()
     private lateinit var mealAdapter: PlanMealsAdapter
+
+    // Lista de refeições com valores padrão (6 refeições comuns)
     private val meals = mutableListOf(
         MealUi("Cafe da Manha"),
         MealUi("Lanche da Manha"),
@@ -41,6 +57,7 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         MealUi("Ceia")
     )
 
+    // Data selecionada para o plano (padrão: hoje)
     private var selectedDateMillis: Long = MaterialDatePicker.todayInUtcMilliseconds()
 
     override fun onCreateView(
@@ -64,6 +81,10 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         observeViewModel()
     }
 
+    /**
+     * Configura o seletor de data usando MaterialDatePicker.
+     * Ao clicar no campo de data, exibe um calendário para seleção.
+     */
     private fun setupDatePicker() {
         binding.etDate.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
@@ -80,10 +101,16 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         }
     }
 
+    /**
+     * Configura o RecyclerView de refeições e o botão para adicionar novas refeições.
+     * Cada refeição é editável e pode conter múltiplos itens alimentares.
+     */
     private fun setupMealList() {
         mealAdapter = PlanMealsAdapter(meals, this)
         binding.rvMeals.adapter = mealAdapter
         binding.rvMeals.layoutManager = LinearLayoutManager(requireContext())
+
+        // Botão para adicionar nova refeição
         binding.btnAddMeal.setOnClickListener {
             meals.add(MealUi("Nova refeicao"))
             mealAdapter.notifyItemInserted(meals.lastIndex)
@@ -91,6 +118,10 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         }
     }
 
+    /**
+     * Observa o estado do ViewModel para reagir a erros e sucesso no salvamento.
+     * Exibe mensagens via Snackbar e navega de volta em caso de sucesso.
+     */
     private fun observeViewModel() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             state.error?.let {
@@ -107,9 +138,15 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         }
     }
 
+    /**
+     * Valida e salva o plano alimentar no Firestore.
+     * Converte a lista de refeições (MealUi) para o modelo de dados (MealEntry).
+     * Verifica se o usuário está autenticado antes de salvar.
+     */
     private fun savePlan() {
         val currentUser = Firebase.auth.currentUser
         if (currentUser == null) {
+            // Usuário não autenticado - redireciona para login
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.nav_graph, true)
                 .build()
@@ -117,6 +154,7 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
             return
         }
 
+        // Converte as refeições da UI para o modelo de dados
         val mealEntries = meals.map { meal ->
             MealEntry(
                 name = meal.title,
@@ -125,6 +163,7 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
             )
         }
 
+        // Salva o plano com os dados do formulário
         viewModel.savePlan(
             patientId = args.patientId,
             ownerUid = currentUser.uid,
@@ -133,6 +172,9 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         )
     }
 
+    /**
+     * Formata um timestamp em milissegundos para o formato dd/MM/yyyy.
+     */
     private fun formatDate(millis: Long): String {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return sdf.format(Date(millis))
@@ -143,16 +185,27 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         _binding = null
     }
 
+    // Callbacks do PlanMealsAdapter.MealListener para gerenciar as refeições
+
+    /**
+     * Chamado quando o título ou observações de uma refeição são atualizados.
+     */
     override fun onUpdate(mealIndex: Int, title: String?, observations: String?) {
         title?.let { meals[mealIndex].title = it }
         observations?.let { meals[mealIndex].observations = it }
     }
 
+    /**
+     * Chamado quando um novo item alimentar é adicionado a uma refeição.
+     */
     override fun onAddItem(mealIndex: Int) {
         meals[mealIndex].items.add("")
         mealAdapter.notifyItemChanged(mealIndex)
     }
 
+    /**
+     * Chamado quando um item alimentar é removido de uma refeição.
+     */
     override fun onRemoveItem(mealIndex: Int, itemIndex: Int) {
         if (itemIndex in meals[mealIndex].items.indices) {
             meals[mealIndex].items.removeAt(itemIndex)
@@ -160,12 +213,18 @@ class PlanFormFragment : Fragment(), PlanMealsAdapter.MealListener {
         }
     }
 
+    /**
+     * Chamado quando o texto de um item alimentar é alterado.
+     */
     override fun onItemChanged(mealIndex: Int, itemIndex: Int, text: String) {
         if (itemIndex in meals[mealIndex].items.indices) {
             meals[mealIndex].items[itemIndex] = text
         }
     }
 
+    /**
+     * Chamado quando uma refeição completa é removida do plano.
+     */
     override fun onRemoveMeal(mealIndex: Int) {
         if (mealIndex in meals.indices) {
             meals.removeAt(mealIndex)

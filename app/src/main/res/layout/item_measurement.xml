@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout do item de medida antropométrica na lista de medidas do paciente -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,6 +15,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Data da medição -->
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
@@ -22,6 +24,7 @@
             android:textStyle="bold"
             tools:text="15/01/2025" />
 
+        <!-- Peso registrado (em kg) -->
         <TextView
             android:id="@+id/tv_weight"
             android:layout_width="wrap_content"
@@ -29,6 +32,7 @@
             android:layout_marginTop="8dp"
             tools:text="Peso: 70.5 kg" />
 
+        <!-- IMC calculado e sua classificação -->
         <TextView
             android:id="@+id/tv_imc"
             android:layout_width="wrap_content"

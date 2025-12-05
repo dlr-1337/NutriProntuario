@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Tela de listagem de pacientes - exibe todos os pacientes cadastrados com opções de busca e adição -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Barra de aplicativo com toolbar -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Toolbar com título da tela -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -22,6 +25,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- Lista de pacientes - exibe cards com informações de cada paciente -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_patients"
             android:layout_width="0dp"
@@ -35,6 +39,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_patient" />
 
+        <!-- Mensagem exibida quando não há pacientes cadastrados -->
         <TextView
             android:id="@+id/tv_empty"
             android:layout_width="wrap_content"
@@ -50,6 +55,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Botão flutuante para adicionar novo paciente -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"

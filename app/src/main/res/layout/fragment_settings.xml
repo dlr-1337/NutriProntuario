@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout da tela de configurações do aplicativo -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -11,6 +12,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Título da seção de segurança -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,6 +21,7 @@
             android:textStyle="bold"
             android:textColor="?attr/colorPrimary" />
 
+        <!-- Cartão com opções de segurança -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!-- Opção para alterar o PIN de acesso -->
                 <LinearLayout
                     android:id="@+id/layout_change_pin"
                     android:layout_width="match_parent"
@@ -50,11 +54,13 @@
 
                 </LinearLayout>
 
+                <!-- Divisor entre opções -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="?android:attr/listDivider" />
 
+                <!-- Opção para habilitar/desabilitar autenticação biométrica -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,6 +74,7 @@
                         android:text="@string/enable_biometric"
                         android:textSize="16sp" />
 
+                    <!-- Switch para ativar biometria -->
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/switch_biometric"
                         android:layout_width="wrap_content"
@@ -79,6 +86,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Título da seção de tema -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,6 +96,7 @@
             android:textStyle="bold"
             android:textColor="?attr/colorPrimary" />
 
+        <!-- Cartão com opções de tema -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,24 +104,28 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp">
 
+            <!-- Grupo de opções de tema (claro, escuro, sistema) -->
             <RadioGroup
                 android:id="@+id/rg_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp">
 
+                <!-- Opção de tema claro -->
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_light"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/theme_light" />
 
+                <!-- Opção de tema escuro -->
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_dark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/theme_dark" />
 
+                <!-- Opção de tema padrão do sistema (selecionada por padrão) -->
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_system"
                     android:layout_width="match_parent"
@@ -124,6 +137,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Título da seção de conta -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,6 +147,7 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
+        <!-- Botão para fazer logout da conta -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_logout"
             style="@style/Widget.Material3.Button.OutlinedButton"

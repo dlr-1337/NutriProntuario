@@ -12,11 +12,20 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Fragment que exibe o resumo geral do paciente.
+ *
+ * Apresenta informações básicas do paciente como nome, telefone e observações,
+ * além de dados resumidos das últimas medições (peso e IMC) e data da última consulta.
+ * Faz parte do ViewPager2 na tela de perfil do paciente.
+ */
 class PatientSummaryFragment : Fragment() {
 
+    // ViewBinding para acessar as views do layout
     private var _binding: FragmentPatientSummaryBinding? = null
     private val binding get() = _binding!!
 
+    // ViewModel compartilhado com o fragment pai (PatientProfileFragment)
     private val viewModel: PatientDetailViewModel by viewModels({ requireParentFragment() })
 
     override fun onCreateView(
@@ -33,7 +42,12 @@ class PatientSummaryFragment : Fragment() {
         observeViewModel()
     }
 
+    /**
+     * Observa os dados do ViewModel e atualiza a interface.
+     * Monitora informações do paciente, medições e consultas para exibir o resumo.
+     */
     private fun observeViewModel() {
+        // Observa dados básicos do paciente
         viewModel.patient.observe(viewLifecycleOwner) { patient ->
             patient?.let {
                 binding.tvName.text = it.name
@@ -42,6 +56,7 @@ class PatientSummaryFragment : Fragment() {
             }
         }
 
+        // Observa medições para exibir o último peso e IMC
         viewModel.measurements.observe(viewLifecycleOwner) { list ->
             val latest = list.firstOrNull()
             if (latest != null) {
@@ -53,12 +68,16 @@ class PatientSummaryFragment : Fragment() {
             }
         }
 
+        // Observa consultas para exibir a data da última consulta
         viewModel.consultations.observe(viewLifecycleOwner) { list ->
             val latestDate = list.firstOrNull()?.date
             binding.tvRecentData.text = latestDate?.let { "Ultima consulta: ${formatDate(it)}" } ?: "Ultima consulta: --"
         }
     }
 
+    /**
+     * Formata um timestamp em milissegundos para o formato dd/MM/yyyy.
+     */
     private fun formatDate(millis: Long): String {
         if (millis == 0L) return "--"
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -73,6 +92,9 @@ class PatientSummaryFragment : Fragment() {
     companion object {
         private const val ARG_PATIENT_ID = "patient_id"
 
+        /**
+         * Método factory para criar uma nova instância do fragment com o ID do paciente.
+         */
         fun newInstance(patientId: Long) = PatientSummaryFragment().apply {
             arguments = Bundle().apply {
                 putLong(ARG_PATIENT_ID, patientId)

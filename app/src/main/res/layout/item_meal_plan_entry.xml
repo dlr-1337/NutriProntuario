@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout do item individual (alimento) dentro de uma refeição do plano alimentar -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -6,11 +7,13 @@
     android:orientation="horizontal"
     android:paddingVertical="4dp">
 
+    <!-- Checkbox para marcar/desmarcar o item -->
     <CheckBox
         android:id="@+id/cb_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <!-- Campo editável para o nome do alimento/item -->
     <EditText
         android:id="@+id/et_item"
         android:layout_width="0dp"
@@ -20,6 +23,7 @@
         android:paddingStart="8dp"
         android:inputType="textCapSentences" />
 
+    <!-- Botão para remover este item da refeição -->
     <ImageView
         android:id="@+id/btn_remove_item"
         android:layout_width="24dp"

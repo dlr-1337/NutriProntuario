@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout do formulário de cadastro/edição de medidas antropométricas do paciente -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,7 @@
     android:padding="16dp"
     tools:context=".ui.measurements.MeasurementFormFragment">
 
+    <!-- Título do formulário -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
@@ -20,6 +22,7 @@
         app:layout_constraintEnd_toStartOf="@id/btn_save"
         app:layout_constraintHorizontal_bias="0" />
 
+    <!-- Botão para salvar a medida -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         style="@style/Widget.Material3.Button.TonalButton"
@@ -35,6 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_title" />
 
+    <!-- Container com scroll para os campos do formulário -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -50,6 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Campo de data da medição -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_date"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -70,6 +75,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo de peso (em kg) -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_weight"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -89,6 +95,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo de altura (em cm) -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_height"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -108,6 +115,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo de circunferência da cintura (em cm) -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_waist"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -127,6 +135,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Cartão com cálculo automático do IMC -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,6 +145,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="16dp">
 
+                <!-- Cabeçalho do IMC com ícone -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -156,6 +166,7 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
+                <!-- Valor numérico do IMC calculado -->
                 <TextView
                     android:id="@+id/tv_imc_value"
                     android:layout_width="wrap_content"
@@ -166,6 +177,7 @@
                     android:textStyle="bold"
                     tools:text="24.5" />
 
+                <!-- Classificação do IMC (ex: Peso normal, Sobrepeso, etc) -->
                 <TextView
                     android:id="@+id/tv_imc_classification"
                     android:layout_width="wrap_content"

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Aba de planos alimentares do paciente - lista todos os planos com opção de adicionar novos -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Lista de planos alimentares - exibe cards com data e refeições de cada plano -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_plans"
         android:layout_width="0dp"
@@ -18,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_plan" />
 
+    <!-- Mensagem exibida quando não há planos alimentares cadastrados -->
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"
@@ -29,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Botão flutuante para adicionar novo plano alimentar -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"

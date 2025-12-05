@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout do item de paciente na lista de pacientes -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <!-- Ícone avatar do paciente -->
         <ImageView
             android:id="@+id/iv_avatar"
             android:layout_width="48dp"
@@ -22,6 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Botão de menu de ações (três pontos verticais) -->
         <ImageButton
             android:id="@+id/btn_more"
             android:layout_width="36dp"
@@ -34,6 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <!-- Nome do paciente -->
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
@@ -46,6 +50,7 @@
             app:layout_constraintTop_toTopOf="@id/iv_avatar"
             tools:text="Joao da Silva" />
 
+        <!-- Telefone do paciente -->
         <TextView
             android:id="@+id/tv_phone"
             android:layout_width="0dp"
@@ -58,6 +63,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             tools:text="(62) 99999-9999" />
 
+        <!-- Data do último atendimento do paciente -->
         <TextView
             android:id="@+id/tv_last_appointment"
             android:layout_width="0dp"

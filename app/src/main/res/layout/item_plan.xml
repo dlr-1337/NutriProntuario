@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout do item de plano alimentar na lista de planos do paciente -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,6 +15,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Data do plano alimentar -->
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
@@ -22,6 +24,7 @@
             android:textStyle="bold"
             tools:text="Plano de 15/01/2025" />
 
+        <!-- Mensagem de instrução para visualizar detalhes -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
