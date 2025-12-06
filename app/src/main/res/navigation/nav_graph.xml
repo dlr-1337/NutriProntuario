@@ -3,10 +3,10 @@
     Grafo de Navegação do NutriProntuario
 
     Define o fluxo de navegação entre as telas (fragments) do aplicativo usando o Navigation Component.
-    O destino inicial (startDestination) é o SplashUnlockFragment, que verifica autenticação e PIN.
+    O destino inicial (startDestination) é o AuthFragment para autenticação Firebase.
 
     Fluxo principal:
-    1. SplashUnlock → verifica PIN/biometria → Auth (se necessário) → Lista de Pacientes
+    1. Auth → (se logado) → Lista de Pacientes
     2. Lista de Pacientes → Formulário de Paciente | Perfil do Paciente | Configurações
     3. Perfil do Paciente → Formulários de Consulta, Medida ou Plano Alimentar
 -->
@@ -14,7 +14,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashUnlockFragment">
+    app:startDestination="@id/authFragment">
 
     <!-- Tela de Autenticação (Login/Cadastro com Firebase) -->
     <fragment
@@ -26,25 +26,7 @@
         <action
             android:id="@+id/action_authFragment_to_patientListFragment"
             app:destination="@id/patientListFragment"
-            app:popUpTo="@id/splashUnlockFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-
-    <!-- Tela de Splash com verificação de PIN/Biometria -->
-    <fragment
-        android:id="@+id/splashUnlockFragment"
-        android:name="com.example.nutriprontuario.ui.splash.SplashUnlockFragment"
-        android:label="@string/app_title"
-        tools:layout="@layout/fragment_splash_unlock">
-        <!-- Navega para autenticação se usuário não estiver logado no Firebase -->
-        <action
-            android:id="@+id/action_splash_to_auth"
-            app:destination="@id/authFragment" />
-        <!-- Navega para lista de pacientes se PIN/biometria validados e usuário logado -->
-        <action
-            android:id="@+id/action_splash_to_patientList"
-            app:destination="@id/patientListFragment"
-            app:popUpTo="@id/splashUnlockFragment"
+            app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

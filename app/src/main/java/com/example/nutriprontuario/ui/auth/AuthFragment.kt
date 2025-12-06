@@ -130,12 +130,12 @@ class AuthFragment : Fragment() {
     /**
      * Navega para a tela de lista de pacientes.
      *
-     * Remove as telas anteriores da pilha (splash/auth) para que
-     * o botão voltar não retorne para a autenticação.
+     * Remove a tela de auth da pilha para que o botão voltar
+     * não retorne para a autenticação.
      */
     private fun navigateToPatients() {
         val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.splashUnlockFragment, true) // Remove splash da pilha
+            .setPopUpTo(R.id.authFragment, true)
             .build()
         findNavController().navigate(R.id.patientListFragment, null, navOptions)
     }

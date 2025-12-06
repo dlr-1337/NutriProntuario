@@ -58,9 +58,6 @@ dependencies {
     // ViewPager2
     implementation(libs.androidx.viewpager2)
 
-    // Biometric
-    implementation(libs.androidx.biometric)
-
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
