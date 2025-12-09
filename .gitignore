@@ -13,3 +13,13 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Google Services (Segurança)
+google-services.json
+
+# Claude
+.claude/
+
+# Android Studio
+*.jks
+*.keystore
