@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Mantém edge-to-edge, mas aplica os insets do sistema para não sobrepor status/navigation bar
+        // Mantém a tela imersiva aplicando os insets das barras do sistema para não sobrepor status e navegação
         WindowCompat.setDecorFitsSystemWindows(window, false)
         // Infla o layout usando ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
