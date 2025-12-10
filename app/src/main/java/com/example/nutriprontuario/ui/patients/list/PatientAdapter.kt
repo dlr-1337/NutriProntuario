@@ -64,7 +64,10 @@ class PatientAdapter(
             // Exibe os dados do paciente
             binding.tvName.text = patient.name
             binding.tvPhone.text = patient.phone ?: ""
-            binding.tvLastAppointment.text = patient.lastAppointment ?: "Nunca"
+            val context = binding.root.context
+            val lastAppointment = patient.lastAppointment ?: context.getString(R.string.never)
+            binding.tvLastAppointment.text =
+                context.getString(R.string.last_appointment, lastAppointment)
 
             // Clique no card abre o perfil do paciente
             binding.root.setOnClickListener {

@@ -24,6 +24,8 @@ class PatientListViewModel(
     private var listener: ListenerRegistration? = null
     // Termo de busca atual para filtrar pacientes
     private var query: String = ""
+    // UID do usuário autenticado (necessário para exclusão)
+    private var ownerUid: String? = null
 
     // Lista completa de pacientes (sem filtro)
     private val _patients = MutableLiveData<List<Patient>>(emptyList())
@@ -47,7 +49,12 @@ class PatientListViewModel(
      * @param onComplete Callback com resultado da operação
      */
     fun deletePatient(patientId: Long, onComplete: (Boolean, String?) -> Unit) {
-        repository.deletePatientCascade(patientId, onComplete)
+        val uid = ownerUid
+        if (uid.isNullOrEmpty()) {
+            onComplete(false, "Usuário não autenticado.")
+            return
+        }
+        repository.deletePatientCascade(patientId, uid, onComplete)
     }
 
     /**
@@ -62,6 +69,8 @@ class PatientListViewModel(
     fun start(ownerUid: String) {
         // Evita criar múltiplos listeners
         if (listener != null) return
+
+        this.ownerUid = ownerUid
 
         loading.value = true
         listener = repository.listenPatients(

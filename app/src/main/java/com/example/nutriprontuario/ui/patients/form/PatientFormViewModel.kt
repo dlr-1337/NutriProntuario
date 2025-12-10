@@ -105,10 +105,12 @@ class PatientFormViewModel(
         _state.value = _state.value?.copy(isLoading = true, error = null, saved = false)
 
         // Cria objeto Patient com ID novo ou existente
+        val currentPatient = _state.value?.patient
         val patient = Patient(
             id = if (patientId == -1L) System.currentTimeMillis() else patientId,
             name = name,
             phone = phone,
+            lastAppointment = currentPatient?.lastAppointment,
             notes = notes,
             ownerUid = ownerUid
         )

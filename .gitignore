@@ -1,24 +1,30 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Android/IntelliJ
+.idea/
+.gradle/
 local.properties
+*.iml
+*.hprof
+
+# Build outputs
+app/build/
+*/build/
+
+# Gradle
+gradlew.bat
+gradlew
+
+# Firebase config (provide locally)
+app/google-services.json
+
+# Misc
+.DS_Store
+*.log
+
+# Local docs
+prosposta_de_projeto_dispositivos_moveis (1).pdf
 
 # Google Services (Segurança)
 google-services.json
-
-# Claude
-.claude/
 
 # Android Studio
 *.jks

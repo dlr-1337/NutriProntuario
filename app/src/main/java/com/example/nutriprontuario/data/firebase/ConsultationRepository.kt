@@ -3,7 +3,11 @@ package com.example.nutriprontuario.data.firebase
 import com.example.nutriprontuario.data.model.Consultation
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Repositório responsável pelo gerenciamento de Consultas no Firebase Firestore.
@@ -67,16 +71,23 @@ class ConsultationRepository(
         consultation: Consultation,
         onComplete: (Boolean, String?) -> Unit
     ) {
-        // Cria referência para novo documento (ID automático)
-        val docRef = firestore.collection(PATIENTS_COLLECTION)
+        val patientDoc = firestore.collection(PATIENTS_COLLECTION)
             .document(consultation.patientId.toString())
+        val consultationDoc = patientDoc
             .collection(COLLECTION)
             .document()
 
-        // Atualiza o objeto com o ID gerado e salva
-        val data = consultation.copy(id = docRef.id)
-        docRef.set(data)
-            .addOnSuccessListener { onComplete(true, null) }
+        val data = consultation.copy(id = consultationDoc.id)
+        consultationDoc.set(data)
+            .addOnSuccessListener {
+                refreshLastAppointment(consultation.patientId) { success, error ->
+                    if (success) {
+                        onComplete(true, null)
+                    } else {
+                        onComplete(false, error)
+                    }
+                }
+            }
             .addOnFailureListener { onComplete(false, it.localizedMessage) }
     }
 
@@ -97,8 +108,45 @@ class ConsultationRepository(
             .collection(COLLECTION)
             .document(consultationId)
             .delete()
-            .addOnSuccessListener { onComplete(true, null) }
+            .addOnSuccessListener {
+                refreshLastAppointment(patientId) { success, error ->
+                    if (success) {
+                        onComplete(true, null)
+                    } else {
+                        onComplete(false, error)
+                    }
+                }
+            }
             .addOnFailureListener { onComplete(false, it.localizedMessage) }
+    }
+
+    /**
+     * Atualiza o campo lastAppointment do paciente com base na consulta mais recente.
+     */
+    private fun refreshLastAppointment(
+        patientId: Long,
+        onComplete: (Boolean, String?) -> Unit
+    ) {
+        val patientDoc = firestore.collection(PATIENTS_COLLECTION)
+            .document(patientId.toString())
+
+        patientDoc.collection(COLLECTION)
+            .orderBy("date", Query.Direction.DESCENDING)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val lastDate = snapshot.documents.firstOrNull()?.getLong("date")
+                val formatted = lastDate?.let { formatDate(it) }
+                patientDoc.update("lastAppointment", formatted)
+                    .addOnSuccessListener { onComplete(true, null) }
+                    .addOnFailureListener { onComplete(false, it.localizedMessage) }
+            }
+            .addOnFailureListener { onComplete(false, it.localizedMessage) }
+    }
+
+    private fun formatDate(millis: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(Date(millis))
     }
 
     companion object {

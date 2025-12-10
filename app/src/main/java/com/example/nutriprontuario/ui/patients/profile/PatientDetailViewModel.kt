@@ -152,7 +152,11 @@ class PatientDetailViewModel(
      * @param onComplete Callback com resultado da operação
      */
     fun deletePatient(onComplete: (Boolean, String?) -> Unit) {
-        patientRepository.deletePatient(patientId) { success, error ->
+        if (ownerUid.isBlank()) {
+            onComplete(false, "Usuário não autenticado.")
+            return
+        }
+        patientRepository.deletePatientCascade(patientId, ownerUid) { success, error ->
             onComplete(success, error)
         }
     }

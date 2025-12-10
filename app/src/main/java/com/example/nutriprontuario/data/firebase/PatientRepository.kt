@@ -161,6 +161,7 @@ class PatientRepository(
      */
     fun deletePatientCascade(
         patientId: Long,
+        ownerUid: String,
         onComplete: (Boolean, String?) -> Unit
     ) {
         val patientDoc = firestore.collection(COLLECTION).document(patientId.toString())
@@ -172,7 +173,9 @@ class PatientRepository(
          * @param onDone Callback chamado ao finalizar a exclusão
          */
         fun deleteCollection(path: String, onDone: (Boolean, String?) -> Unit) {
-            patientDoc.collection(path).get()
+            patientDoc.collection(path)
+                .whereEqualTo("ownerUid", ownerUid)
+                .get()
                 .addOnSuccessListener { snap ->
                     // Cria lista de tarefas de exclusão para cada documento
                     val tasks = snap.documents.map { it.reference.delete() }
