@@ -1,172 +1,86 @@
+# NutriProntuario
 
-# 🥗 NutriProntuario
+**Pacientes, consultas, medidas e planos alimentares organizados em um aplicativo Android.**
 
-> **Gestão Inteligente para Nutricionistas**
+Aplicação nativa em Kotlin voltada ao acompanhamento nutricional. Reúne autenticação, cadastro de pacientes e um perfil com áreas para resumo, consultas, medidas antropométricas e planos alimentares. Os dados são acessados pelo Firebase, com repositórios separados da interface.
 
-O **NutriProntuario** é uma aplicação Android nativa desenvolvida em Kotlin, projetada para auxiliar nutricionistas no gerenciamento eficiente dos seus pacientes e prontuários. A aplicação centraliza dados de consultas, planos alimentares e medidas antropométricas, utilizando a nuvem para garantir acesso seguro e em tempo real às informações.
+[Recursos](#recursos) · [Arquitetura](#arquitetura) · [Configuração](#configuração-e-execução) · [Código](#organização-do-código)
 
-## 📱 Visão Geral do Projeto
+## Recursos
 
-Este projeto foi construído seguindo as melhores práticas de desenvolvimento Android moderno, utilizando a arquitetura **MVVM (Model-View-ViewModel)** para garantir um código limpo, testável e de fácil manutenção. O backend é totalmente servido pelo **Firebase**, eliminando a necessidade de um servidor próprio e garantindo escalabilidade.
+| Área | Funcionalidades |
+| --- | --- |
+| Acesso | Cadastro e login por Firebase Authentication. |
+| Pacientes | Cadastro, listagem, pesquisa por nome, edição e exclusão. |
+| Atualização | Listener do Firestore para acompanhar a lista de pacientes do proprietário. |
+| Prontuário | Abas de resumo, consultas, medidas e planos. |
+| Acompanhamento | Organização do histórico de atendimentos e registros nutricionais. |
 
-### ✨ Principais Funcionalidades
+A lista é filtrada por `ownerUid` e ordenada por nome no repositório de pacientes. Esse filtro organiza a consulta, mas a proteção dos dados depende também das regras efetivamente publicadas no Firestore.
 
--   **🔐 Autenticação Segura**
+## Arquitetura
 
-    -   Login e Registo de nutricionistas.
-
-    -   Gestão de sessão persistente via Firebase Authentication.
-
--   **👥 Gestão de Pacientes**
-
-    -   Listagem completa de pacientes com atualização em tempo real (Realtime updates).
-
-    -   Pesquisa rápida de pacientes por nome.
-
-    -   Cadastro completo com dados de contato.
-
-    -   Edição e remoção segura de registos.
-
--   **user_md Perfil Detalhado do Paciente**
-
-    -   Visualização organizada em abas (Tabs) utilizando `ViewPager2`.
-
-    -   **Resumo:** Visão geral do paciente.
-
-    -   **Consultas:** Histórico de atendimentos e agendamentos.
-
-    -   **Medidas:** Acompanhamento da evolução antropométrica (peso, altura, etc.).
-
-    -   **Planos:** Gestão de planos alimentares personalizados.
-
--   **☁️ Sincronização em Nuvem**
-
-    -   Todos os dados são armazenados no **Cloud Firestore**.
-
-    -   Suporte a funcionamento offline (cache do Firestore).
-
-
-## 🛠 Tech Stack & Bibliotecas
-
-O projeto utiliza um conjunto robusto de tecnologias modernas do ecossistema Android:
-
-### Core
-
--   [**Kotlin**](https://kotlinlang.org/ "null"): Linguagem principal de desenvolvimento.
-
--   **Android SDK**:
-
-    -   Min SDK: 24
-
-    -   Target SDK: 36
-
-
-### Arquitetura & Jetpack
-
--   **MVVM**: Padrão de arquitetura para separação de responsabilidades.
-
--   [**ViewBinding**](https://developer.android.com/topic/libraries/view-binding "null"): Para interação segura e direta com as Views XML.
-
--   [**Navigation Component**](https://developer.android.com/guide/navigation "null"): Gestão de navegação entre Fragments e passagem de argumentos (SafeArgs).
-
--   [**ViewModel**](https://developer.android.com/topic/libraries/architecture/viewmodel "null"): Gestão de estado da UI consciente do ciclo de vida.
-
--   [**LiveData**](https://developer.android.com/topic/libraries/architecture/livedata "null"): Observação reativa de dados.
-
-
-### UI & Layout
-
--   **Material Design Components**: Componentes visuais modernos (FAB, TextInputs, Dialogs).
-
--   **ConstraintLayout**: Criação de layouts responsivos e complexos.
-
--   **ViewPager2**: Navegação por abas no perfil do paciente.
-
--   **RecyclerView**: Listas eficientes e dinâmicas.
-
-
-### Backend (BaaS)
-
--   [**Firebase Authentication**](https://firebase.google.com/docs/auth "null"): Sistema de login.
-
--   [**Cloud Firestore**](https://firebase.google.com/docs/firestore "null"): Base de dados NoSQL orientada a documentos.
-
--   **Firebase BOM**: Gestão de versões das bibliotecas Firebase.
-
-
-## 📂 Estrutura do Projeto
-
-A estrutura de pastas segue uma organização lógica baseada em funcionalidades e camadas:
-
-```
-com.example.nutriprontuario
-├── 📂 data                  # Camada de Dados
-│   ├── 📂 firebase          # Repositórios (interação com Firestore)
-│   │   ├── ConsultationRepository.kt
-│   │   ├── PatientRepository.kt
-│   │   └── ...
-│   └── 📂 model             # Data Classes (Entidades)
-│       ├── Patient.kt
-│       ├── MealPlan.kt
-│       └── ...
-├── 📂 ui                    # Camada de Apresentação (UI)
-│   ├── 📂 auth              # Login e Registo
-│   ├── 📂 patients          # Funcionalidades de Pacientes
-│   │   ├── 📂 list          # Lista principal
-│   │   ├── 📂 form          # Formulário de cadastro
-│   │   └── 📂 profile       # Detalhes e Abas do paciente
-│   ├── 📂 consultations     # Gestão de Consultas
-│   ├── 📂 plans             # Planos Alimentares
-│   └── 📂 settings          # Configurações do App
-└── 📄 MainActivity.kt       # Activity única (Single Activity Architecture)
-
+```mermaid
+flowchart LR
+    V[Fragments e Views XML] --> M[ViewModels e LiveData]
+    M --> R[Repositórios]
+    R --> D[(Cloud Firestore)]
+    V --> A[Firebase Authentication]
 ```
 
-## 🚀 Como Configurar e Executar
+| Camada | Tecnologias |
+| --- | --- |
+| Android | Kotlin, Activity única e Fragments. |
+| Estado e navegação | ViewModel, LiveData, Navigation Component e SafeArgs. |
+| Interface | ViewBinding, Material Components, RecyclerView, ConstraintLayout e ViewPager2. |
+| Dados | Firebase Authentication, Cloud Firestore e Firebase BOM. |
+| Build | Gradle Kotlin DSL. |
 
-### Pré-requisitos
+O módulo Android declara **minSdk 24**, **compileSdk 36** e **targetSdk 36**, com alvo de compilação Java/Kotlin 11. O JDK que executa o Gradle deve ser compatível com a versão do plugin Android utilizada; o alvo de bytecode não define sozinho esse requisito.
 
-1.  **Android Studio**: Versão Ladybug ou mais recente.
+## Configuração e execução
 
-2.  **JDK**: Java Development Kit 11 ou superior.
+Use Android Studio, SDK Android correspondente ao projeto e um emulador ou dispositivo compatível. Prepare um projeto Firebase exclusivo para desenvolvimento, sem dados reais de pacientes.
 
-3.  **Conta Google**: Para configuração do Firebase.
+```bash
+git clone https://github.com/dlr-1337/NutriProntuario.git
+cd NutriProntuario
+```
 
+No projeto Firebase, registre um aplicativo Android com o identificador **`com.example.nutriprontuario`**. Coloque sua configuração em `app/google-services.json`, habilite autenticação por e-mail/senha e crie o Cloud Firestore com regras restritivas para os proprietários dos registros.
 
-### Passo a Passo
+Abra a raiz no Android Studio, sincronize o Gradle e execute o módulo `app`. Para compilar pela linha de comando após configurar SDK e Firebase:
 
-1.  **Clone o repositório**
+```bash
+# Linux / macOS
+bash gradlew assembleDebug
+```
 
-    ```
-    git clone [https://github.com/seu-usuario/nutriprontuario.git](https://github.com/seu-usuario/nutriprontuario.git)
-    cd nutriprontuario
-    
-    ```
+```powershell
+# Windows
+.\gradlew.bat assembleDebug
+```
 
-2.  **Configuração do Firebase**
+Não utilize regras abertas de teste com informações reais. Contas de serviço, credenciais administrativas e arquivos privados de operação não devem ser versionados.
 
-    -   Aceda à [Consola do Firebase](https://console.firebase.google.com/ "null").
+## Organização do código
 
-    -   Crie um novo projeto.
+Base: [`app/src/main/java/com/example/nutriprontuario`](app/src/main/java/com/example/nutriprontuario/).
 
-    -   Adicione uma app Android com o ID: `com.example.nutriprontuario`.
+| Diretório | Responsabilidade |
+| --- | --- |
+| `data/model` | Modelos de pacientes, consultas e planos. |
+| `data/firebase` | Operações e listeners do Firestore. |
+| `ui/auth` | Login e cadastro. |
+| `ui/patients` | Lista, formulário e perfil do paciente. |
+| `ui/consultations` | Consultas. |
+| `ui/plans` | Planos alimentares. |
+| `ui/settings` | Configurações da interface. |
 
-    -   Faça o download do ficheiro `google-services.json`.
+Comece por [`PatientRepository.kt`](app/src/main/java/com/example/nutriprontuario/data/firebase/PatientRepository.kt) para acompanhar consulta, gravação e exclusão dos registros. As dependências e configurações do aplicativo estão em [`app/build.gradle.kts`](app/build.gradle.kts).
 
-    -   Mova o ficheiro para a pasta: `app/google-services.json`.
+## Cuidados para uso e demonstração
 
-3.  **Habilitar Serviços no Firebase**
+O código distingue exclusão apenas do documento do paciente e exclusão sequencial das subcoleções. Essa sequência não deve ser tratada como uma transação atômica de todo o prontuário; valide falhas e recuperação antes de utilizar exclusões em um ambiente real.
 
-    -   **Authentication:** Vá em "Sign-in method" e ative o provedor "Email/Password".
-
-    -   **Firestore Database:** Crie uma base de dados em modo de teste ou produção e configure as regras de segurança apropriadas.
-
-4.  **Compilar**
-
-    -   Abra o projeto no Android Studio.
-
-    -   Aguarde a sincronização do Gradle (Sync Project with Gradle Files).
-
-    -   Execute a aplicação (`Shift + F10`) num emulador ou dispositivo físico.
-
-    
+Sincronização e cache do provedor não substituem uma política de backup, controle de acesso e retenção. Para apresentações e capturas de tela, utilize pacientes fictícios. O repositório demonstra uma aplicação de gestão e não representa certificação de segurança, conformidade ou adequação clínica.
